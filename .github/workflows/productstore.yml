@@ -166,7 +166,7 @@ jobs:
                     \"fields\": [
                       {
                         \"type\": \"mrkdwn\",
-                        \"text\": \"*Report:*\n<https://nanaquaci.github.io/productstore-qa/|Allure Report>\"
+                        \"text\": \"*Report:*\n<https://nanaquaci.github.io/Phase3-Week8/|Allure Report>\"
                       },
                       {
                         \"type\": \"mrkdwn\",
