@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  selenium:
+    image: selenium/standalone-chrome:latest
+    shm_size: "2g"
+    ports:
+      - "4444:4444"
+
+  tests:
+    build: .
+    working_dir: /app
+    depends_on:
+      - selenium
+    environment:
+      SELENIDE_REMOTE_URL: http://selenium:4444/wd/hub
+    volumes:
+      - ./allure-results:/app/allure-results
+      - ./target:/app/target
+    command: mvn test -Dselenide.remote=http://selenium:4444/wd/hub

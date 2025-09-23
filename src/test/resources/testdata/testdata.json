@@ -1,0 +1,54 @@
+{
+  "users": {
+    "valid_user": {
+      "username": "testuser",
+      "password": "Password123"
+    },
+    "invalid_user": {
+      "username": "wrong_user",
+      "password": "wrong_pass"
+    },
+    "empty_username": {
+      "username": "",
+      "password": "Password123"
+    },
+    "empty_password": {
+      "username": "testuser",
+      "password": ""
+    }
+  },
+  "products": {
+    "phone": "Samsung galaxy s6",
+    "laptop": "Sony vaio i5",
+    "monitor": "Apple monitor 24"
+  },
+  "checkout": {
+    "valid": {
+      "name": "Collins Quaci",
+      "creditCard": "1234567812345678"
+    },
+    "invalid": {
+      "name": "",
+      "creditCard": "abcd1234"
+    }
+  },
+  "contact": {
+    "valid": {
+      "name": "Collins",
+      "email": "collins@example.com",
+      "message": "I need help with my order."
+    },
+    "invalid": {
+      "name": "Collins",
+      "email": "wrong-email-format",
+      "message": "Testing invalid email format."
+    }
+  },
+  "errors": {
+    "invalidLogin": "User does not exist.",
+    "emptyUsername": "Please fill out Username and Password.",
+    "emptyPassword": "Please fill out Username and Password.",
+    "missingName": "Please fill out Name and Creditcard.",
+    "invalidEmail": "Invalid email format."
+  }
+}

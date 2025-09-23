@@ -1,0 +1,203 @@
+name: E-Commerce QA Automation Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  # ------------------------
+  # 1. UI TESTS (BDD + Selenide)
+  # ------------------------
+  ui-tests:
+    name: 🧪 UI Tests
+    runs-on: ubuntu-latest
+    continue-on-error: false
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image for tests
+        run: docker build -t ecommerce_ui_tests .
+
+      - name: Run UI Tests inside Docker
+        run: |
+          mkdir -p allure-results
+          docker run --rm \
+            -v ${{ github.workspace }}/allure-results:/app/allure-results \
+            ecommerce_ui_tests mvn clean test \
+              -Dselenide.remote=http://selenium:4444/wd/hub \
+              -Dselenide.headless=true
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+  # ------------------------
+  # 2. PERFORMANCE TESTS (JMeter)
+  # ------------------------
+  performance:
+    name: 📊 JMeter Load Test
+    runs-on: ubuntu-latest
+    needs: ui-tests
+    if: always()
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run JMeter test plan
+        run: |
+          mkdir -p jmeter-results
+          docker run --rm -v ${{ github.workspace }}:/jmeter \
+            justb4/jmeter \
+            -n -t /jmeter/performance/ProductStoreTest.jmx \
+            -l /jmeter/jmeter-results/results.jtl \
+            -e -o /jmeter/jmeter-results/html-report
+
+      - name: Upload JMeter results
+        uses: actions/upload-artifact@v4
+        with:
+          name: jmeter-results
+          path: jmeter-results
+
+  # ------------------------
+  # 3. SECURITY TESTS (OWASP ZAP)
+  # ------------------------
+  security:
+    name: 🔒 OWASP ZAP Scan
+    runs-on: ubuntu-latest
+    needs: ui-tests
+    if: always()
+
+    steps:
+      - name: Run ZAP Baseline Scan
+        run: |
+          docker run --rm -v ${{ github.workspace }}:/zap/wrk:rw \
+            owasp/zap2docker-stable zap-baseline.py \
+            -t https://www.demoblaze.com \
+            -r zap-report.html
+
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-report
+          path: zap-report.html
+
+  # ------------------------
+  # 4. DEPLOY ALLURE REPORT
+  # ------------------------
+  deploy-report:
+    name: 🚀 Publish Allure Report
+    runs-on: ubuntu-latest
+    needs: [ui-tests, performance, security]
+    if: always()
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Install Allure CLI
+        run: |
+          wget https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
+          tar -xzf allure-2.27.0.tgz
+          sudo mv allure-2.27.0 /opt/allure
+          sudo ln -s /opt/allure/bin/allure /usr/local/bin/allure
+
+      - name: Generate Allure report
+        run: allure generate allure-results --clean -o allure-report
+
+      - name: Deploy report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: allure-report
+          publish_branch: gh-pages
+          force_orphan: true
+
+  # ------------------------
+  # 5. SLACK NOTIFICATION
+  # ------------------------
+  notify-slack:
+    name: 🔔 Slack Notification
+    runs-on: ubuntu-latest
+    needs: [ui-tests, performance, security, deploy-report]
+    if: always()
+
+    steps:
+      - name: Send Slack notification
+        run: |
+          STATUS="${{ needs.ui-tests.result }}"
+          if [ "$STATUS" = "success" ]; then
+            COLOR="good"
+            EMOJI="✅"
+            TITLE="*E-Commerce QA Pipeline Passed*"
+          else
+            COLOR="danger"
+            EMOJI="❌"
+            TITLE="*E-Commerce QA Pipeline Failed*"
+          fi
+
+          curl -X POST -H 'Content-type: application/json' --data "{
+            \"attachments\": [
+              {
+                \"color\": \"$COLOR\",
+                \"blocks\": [
+                  {
+                    \"type\": \"section\",
+                    \"text\": {
+                      \"type\": \"mrkdwn\",
+                      \"text\": \"$EMOJI $TITLE\n*Status:* $STATUS\"
+                    }
+                  },
+                  {
+                    \"type\": \"section\",
+                    \"fields\": [
+                      {
+                        \"type\": \"mrkdwn\",
+                        \"text\": \"*Report:*\n<https://nanaquaci.github.io/productstore-qa/|Allure Report>\"
+                      },
+                      {
+                        \"type\": \"mrkdwn\",
+                        \"text\": \"*Build URL:*\n$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }" ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  # ------------------------
+  # 6. JIRA INTEGRATION (Optional)
+  # ------------------------
+  jira-xray:
+    name: 📌 Push Results to Jira/Xray
+    runs-on: ubuntu-latest
+    needs: [ui-tests]
+    if: always()
+
+    steps:
+      - name: Download Allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Push to Xray
+        run: |
+          curl -H "Content-Type: application/json" \
+               -H "Authorization: Bearer ${{ secrets.XRAY_API_TOKEN }}" \
+               --data @allure-results/cucumber.json \
+               https://xray.cloud.getxray.app/api/v2/import/execution/cucumber
