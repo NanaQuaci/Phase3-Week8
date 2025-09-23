@@ -135,10 +135,6 @@
             <systemPropertyVariables>
                 <allure.results.directory>allure-results</allure.results.directory>
             </systemPropertyVariables>
-<!--            <excludes>-->
-<!--                &lt;!&ndash; Exclude all test classes under com.projects.tests &ndash;&gt;-->
-<!--                <exclude>**/com/projects/tests/**</exclude>-->
-<!--            </excludes>-->
         </configuration>
     </plugin>
 
