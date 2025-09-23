@@ -1,6 +1,7 @@
 package com.projects.pages;
 
 import com.projects.base.BasePage;
+import com.projects.util.CheckoutInfo;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
@@ -11,20 +12,20 @@ public class CheckoutPage extends BasePage {
         $$(".btn, a").findBy(text("Place Order")).click();
     }
 
-    public void fillOrderForm(String name, String creditCard) {
-        $("#name").setValue(name);
-        $("#card").setValue(creditCard);
+    public void fillCheckoutForm(CheckoutInfo info) {
+        $("#name").setValue(info.getName());
+        $("#card").setValue(info.getCreditCard());
     }
 
     public void submitOrder() {
         $$(".btn, a").findBy(text("Purchase")).click();
     }
 
-    public void shouldShowConfirmation() {
-        $(".sweet-alert, #orderModal, .modal-body, .confirm").shouldBe(visible);
+    public boolean isOrderConfirmed() {
+        return $(".sweet-alert, #orderModal, .modal-body, .confirm").is(visible);
     }
 
-    public void shouldShowValidationError() {
-        $(".error, .invalid-feedback, .help-block").shouldBe(visible);
+    public boolean isErrorDisplayed() {
+        return $(".error, .invalid-feedback, .help-block").is(visible);
     }
 }

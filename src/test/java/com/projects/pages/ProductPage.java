@@ -2,10 +2,15 @@ package com.projects.pages;
 
 import com.projects.base.BasePage;
 
-import static com.codeborne.selenide.Selenide.*;       // $, $$, open(), confirm(), etc.
-import static com.codeborne.selenide.Condition.*;     // visible, text, etc.
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Condition.*;
 
 public class ProductPage extends BasePage {
+
+    // Navigate directly to a product by name (from homepage listing)
+    public void openProduct(String productName) {
+        $$(".card-title a").findBy(text(productName)).click();
+    }
 
     // Verify product detail page shows correct product name
     public void verifyProductDetailPage(String productName) {
@@ -16,22 +21,22 @@ public class ProductPage extends BasePage {
     public void clickAddToCart(String buttonLabel) {
         $$("a").findBy(text(buttonLabel)).click();
         try {
-            confirm(); // handles JS alert if present
+            confirm(); // handle JS alert
         } catch (Exception ignored) {
-            // Some AUTs don't trigger an alert; safe to ignore
         }
     }
 
-    // Validate confirmation (toast, modal, or alert substitute)
-    public void shouldShowAddToCartConfirmation() {
-        $("div#message, .toast, .alert").shouldBe(visible);
-    }
-
-    // Convenience method: always click "Add to cart"
+    // Always click "Add to cart"
     public void addToCart() {
         $$(".btn, a").findBy(text("Add to cart")).click();
         try {
             confirm();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {
+        }
+    }
+
+    // Confirmation toast or alert
+    public void shouldShowAddToCartConfirmation() {
+        $("div#message, .toast, .alert").shouldBe(visible);
     }
 }

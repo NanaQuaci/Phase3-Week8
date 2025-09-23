@@ -27,7 +27,7 @@
       "name": "Collins Quaci",
       "creditCard": "1234567812345678"
     },
-    "invalid": {
+    "invalidCard": {
       "name": "",
       "creditCard": "abcd1234"
     }

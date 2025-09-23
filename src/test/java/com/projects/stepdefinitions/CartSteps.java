@@ -45,7 +45,7 @@ public class CartSteps {
 
     @When("the user removes {string}")
     public void userRemovesProduct(String productName) {
-        cartPage.removeProduct(productName);
+        cartPage.removeItem(productName);
     }
 
     @Then("the cart should not contain {string}")
