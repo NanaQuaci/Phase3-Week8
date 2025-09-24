@@ -42,6 +42,10 @@ public class HomePageTest extends BaseTest {
 
         assertTrue(homepage.isContactModalVisible(), "Contact modal should be visible");
 
+        log.info("Closing contact modal");
+        homepage.closeContactModal();
+        assertFalse(homepage.isContactModalVisible(), "Contact modal should be closed");
+
         log.info("Clicking Home link");
         homepage.clickHome();
         assertTrue(homepage.hasProducts(), "Products should be visible after clicking Home link");

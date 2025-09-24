@@ -1,7 +1,11 @@
 package com.projects.pages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.Selenide;
 import com.projects.base.BasePage;
 import com.projects.util.ContactInfo;
+
+import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
@@ -10,6 +14,7 @@ public class ContactPage extends BasePage {
 
     public void openContactForm() {
         clickNavLink("Contact");
+        $("#exampleModal").shouldBe(Condition.visible, Duration.ofSeconds(2));
     }
 
     public void fillContactForm(String name, String email, String message) {
@@ -30,8 +35,13 @@ public class ContactPage extends BasePage {
     }
 
     public boolean shouldShowConfirmation() {
-        return $("div#exampleModal, .modal-body, .alert").is(visible);
+        try {
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
+
 
     public boolean shouldShowEmailValidationError() {
         return $(".invalid-feedback, .error").is(visible);

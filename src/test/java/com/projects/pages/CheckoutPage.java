@@ -1,7 +1,10 @@
 package com.projects.pages;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import com.projects.base.BasePage;
 import com.projects.util.CheckoutInfo;
+import org.openqa.selenium.NoAlertPresentException;
 
 import java.time.Duration;
 
@@ -11,8 +14,11 @@ import static com.codeborne.selenide.Condition.*;
 public class CheckoutPage extends BasePage {
 
     public void placeOrder() {
-        $$(".btn, a").findBy(text("Place Order")).click();
+        $$(".btn").findBy(text("Purchase"))
+                .shouldBe(Condition.visible, Duration.ofSeconds(2))
+                .click();
     }
+
 
     public void fillCheckoutForm(CheckoutInfo info) {
         $("#name").setValue(info.getName());
@@ -24,16 +30,28 @@ public class CheckoutPage extends BasePage {
     }
 
     public boolean isOrderConfirmed() {
-        return $(".sa-success").shouldBe(visible, Duration.ofSeconds(10))
-                .exists()
-                && $("h2").shouldBe(visible, Duration.ofSeconds(10))
-                .getText()
-                .equals("Thank you for your purchase!");
+        SelenideElement alert = $(".sweet-alert.showSweetAlert.visible")
+                .shouldBe(visible, Duration.ofSeconds(10));
+
+        // Check success icon
+        boolean hasSuccessIcon = alert.$(".sa-success").exists();
+
+        // Check confirmation title (ignore punctuation / case)
+        String title = alert.$("h2").getText().trim();
+        boolean titleOk = title.equalsIgnoreCase("Thank you for your purchase!")
+                || title.equalsIgnoreCase("Thank you for your purchase");
+
+        return hasSuccessIcon && titleOk;
     }
 
+
     public boolean isErrorDisplayed() {
-        return $(".sweet-alert").shouldBe(visible, Duration.ofSeconds(10))
-                .getText()
-                .contains("Please fill out Name and Creditcard.");
+        try {
+            String alertText = switchTo().alert().getText();
+            return alertText.contains("Please fill out Name and Creditcard.");
+        } catch (NoAlertPresentException e) {
+            return false;
+        }
     }
 }
+

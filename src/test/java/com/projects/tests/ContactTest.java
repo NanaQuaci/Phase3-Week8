@@ -39,7 +39,7 @@ public class ContactTest extends BaseTest {
     @Story("Invalid Email")
     @Severity(SeverityLevel.NORMAL)
     void testInvalidEmailContactSubmission() {
-        ContactInfo info = TestDataLoader.getContactInfo("invalidEmail");
+        ContactInfo info = TestDataLoader.getContactInfo("invalid");
 
         log.info("Submitting contact form with invalid email");
         contactPage.openContactForm();

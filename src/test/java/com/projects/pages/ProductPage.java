@@ -9,7 +9,7 @@ public class ProductPage extends BasePage {
 
     // Navigate directly to a product by name (from homepage listing)
     public void openProduct(String productName) {
-        $$(".card-title a").findBy(text(productName)).click();
+        $$("h4.card-title a").findBy(text(productName)).click();
     }
 
     // Verify product detail page shows correct product name
@@ -20,20 +20,19 @@ public class ProductPage extends BasePage {
     // Generic button click handler (e.g., "Add to cart")
     public void clickAddToCart(String buttonLabel) {
         $$("a").findBy(text(buttonLabel)).click();
-
-//        try {
-//            confirm();
-//        } catch (Exception ignored) {}
     }
 
     // Always click "Add to cart"
     public void addToCart() {
-        $$(".btn, a").findBy(text("Add to cart")).click();
+        $("a.btn.btn-success.btn-lg")
+                .shouldHave(text("Add to cart"))
+                .click();
         try {
             confirm();
         } catch (Exception ignored) {
         }
     }
+
 
     // Confirmation toast or alert
     public void shouldShowAddToCartConfirmation() {

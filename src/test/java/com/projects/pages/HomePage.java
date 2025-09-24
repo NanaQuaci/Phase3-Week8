@@ -3,6 +3,8 @@ package com.projects.pages;
 import com.codeborne.selenide.Selenide;
 import com.projects.base.BasePage;
 
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.CollectionCondition.*;
@@ -31,7 +33,20 @@ public class HomePage extends BasePage {
 
     // check if contact modal pops up
     public boolean isContactModalVisible() {
-        return $("#exampleModal, .modal-dialog, .modal-content").is(visible);
+        try {
+            // Wait a bit for modal state to stabilize
+            return $("#exampleModal").shouldBe(visible, Duration.ofSeconds(2)).exists();
+        } catch (com.codeborne.selenide.ex.ElementShould e) {
+            // If element is not visible
+            return false;
+        }
+    }
+
+
+
+    public void closeContactModal() {
+        $("#exampleModal .close").click(); // click the "×" button
+        $("#exampleModal").shouldNotBe(visible, Duration.ofSeconds(2));
     }
 
     // click "Home" link in navbar

@@ -1,5 +1,9 @@
 package com.projects.base;
 
+import com.codeborne.selenide.Condition;
+
+import java.time.Duration;
+
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
 
@@ -14,6 +18,10 @@ public abstract class BasePage {
     }
 
     public void clickNavLink(String linkText) {
-        $$(".nav a").findBy(text(linkText)).click();
+        $$(".nav-link")
+                .findBy(Condition.text(linkText))
+                .shouldBe(Condition.visible, Duration.ofSeconds(2))
+                .click();
     }
+
 }

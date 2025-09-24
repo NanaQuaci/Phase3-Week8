@@ -1,5 +1,6 @@
 package com.projects.tests;
 
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.junit5.ScreenShooterExtension;
 import com.projects.base.BaseTest;
 import com.projects.pages.CartPage;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import static com.codeborne.selenide.Selenide.sleep;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,6 +35,7 @@ public class CartTest extends BaseTest {
         productPage.addToCart();
 
         cartPage.openCart();
+        cartPage.waitUntilProductVisible(product);
         assertTrue(cartPage.containsProduct(product), "Cart should contain the added product");
     }
 
@@ -48,7 +51,9 @@ public class CartTest extends BaseTest {
         productPage.addToCart();
 
         cartPage.openCart();
-        assertEquals(2, cartPage.getQuantityFor(product),
+        int actualCount = cartPage.getEntriesFor(product);
+
+        assertEquals(2, actualCount,
                 "Quantity should be 2 when the same product is added twice");
     }
 
@@ -66,10 +71,28 @@ public class CartTest extends BaseTest {
     }
 
     @Test
+    @Story("Remove Item")
+    @Severity(SeverityLevel.CRITICAL)
+    void testRemoveItem() {
+        String product = TestDataLoader.getProduct("phone");
+
+        log.info("Adding and then removing product '{}'", product);
+        productPage.openProduct(product);
+        productPage.addToCart();
+
+        cartPage.openCart();
+        sleep(5000);
+        cartPage.removeItem(product);
+
+        cartPage.shouldNotContainProduct(product);
+    }
+
+
+    @Test
     @Story("Cart Persistence")
     @Severity(SeverityLevel.NORMAL)
     void testCartPersistenceAfterReload() {
-        String product = TestDataLoader.getProduct("monitor");
+        String product = TestDataLoader.getProduct("phone");
 
         log.info("Adding '{}' and refreshing cart", product);
         productPage.openProduct(product);
