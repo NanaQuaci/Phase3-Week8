@@ -22,6 +22,11 @@ public class CartSteps {
         productPage.clickAddToCart(buttonLabel);
     }
 
+    @Then("there should be {int} entries for {string} in the cart")
+    public void entriesForProductInCart(int count, String productName) {
+        cartPage.shouldHaveNumberOfEntries(productName, count);
+    }
+
     @Then("a confirmation should be shown")
     public void confirmationShown() {
         productPage.shouldShowAddToCartConfirmation();
@@ -43,6 +48,7 @@ public class CartSteps {
         cartPage.shouldContainProductWithQuantity(productName, qty);
     }
 
+
     @When("the user removes {string}")
     public void userRemovesProduct(String productName) {
         cartPage.removeItem(productName);
@@ -55,6 +61,7 @@ public class CartSteps {
 
     @Then("the cart should contain {int} item(s)")
     public void cartShouldContainItems(Integer count) {
+        cartPage.openCart();
         cartPage.shouldContainItems(count);
     }
 }

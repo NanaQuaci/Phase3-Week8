@@ -1,5 +1,6 @@
 package com.projects.hooks;
 
+import com.codeborne.selenide.WebDriverRunner;
 import io.cucumber.java.Before;
 import io.cucumber.java.After;
 import com.codeborne.selenide.Configuration;
@@ -11,9 +12,12 @@ public class Hooks {
     public void setUp() {
         Configuration.baseUrl = "https://www.demoblaze.com";
         Configuration.headless = false;         // CI-friendly; turn off for local debugging
-        Configuration.browserSize = "1920x1080";
+        Configuration.browserSize = null;
         // Optional: set remote WebDriver URL via env var for selenium grid
         // Configuration.remote = System.getenv("SELENIUM_REMOTE_URL");
+
+        open("/");
+        WebDriverRunner.getWebDriver().manage().window().maximize();
     }
 
     @After

@@ -40,6 +40,11 @@ public class CartPage extends BasePage {
         $$("tr").findBy(text(productName)).shouldHave(text(String.valueOf(qty)));
     }
 
+    public void shouldHaveNumberOfEntries(String productName, int expectedCount) {
+        $$("tr").filterBy(text(productName)).shouldHave(size(expectedCount));
+    }
+
+
     public void shouldNotContainProduct(String productName) {
         $$("tr").filterBy(text(productName)).shouldHave(size(0));
     }

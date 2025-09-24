@@ -20,10 +20,10 @@ public class ProductPage extends BasePage {
     // Generic button click handler (e.g., "Add to cart")
     public void clickAddToCart(String buttonLabel) {
         $$("a").findBy(text(buttonLabel)).click();
-        try {
-            confirm(); // handle JS alert
-        } catch (Exception ignored) {
-        }
+
+//        try {
+//            confirm();
+//        } catch (Exception ignored) {}
     }
 
     // Always click "Add to cart"
@@ -37,6 +37,11 @@ public class ProductPage extends BasePage {
 
     // Confirmation toast or alert
     public void shouldShowAddToCartConfirmation() {
-        $("div#message, .toast, .alert").shouldBe(visible);
+        var alert = switchTo().alert();
+        String alertText = alert.getText();
+        if (!alertText.contains("Product added")) {
+            throw new AssertionError("Expected alert text to contain 'Product added', but got: " + alertText);
+        }
+        alert.accept();
     }
 }

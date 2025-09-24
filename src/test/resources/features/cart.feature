@@ -14,6 +14,6 @@ Feature: Cart
     Given the user has added "Sony vaio i5" to the cart
     And the user has added "Sony vaio i5" to the cart
     When the user goes to the cart page
-    Then the quantity for "Sony vaio i5" should be 2
+    Then there should be 2 entries for "Sony vaio i5" in the cart
     When the user removes "Sony vaio i5"
     Then the cart should not contain "Sony vaio i5"

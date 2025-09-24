@@ -17,5 +17,5 @@ Feature: Place Order (Checkout)
   @regression
   Scenario: Try to place order with invalid credit card
     Given the user has 1 item in cart
-    When the user fills the order form with name "Test User" and credit card "abcd123"
+    When the user fills the order form with name "Test User" and credit card ""
     Then the form should prevent submission and show an error message

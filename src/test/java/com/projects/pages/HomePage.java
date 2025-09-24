@@ -45,9 +45,9 @@ public class HomePage extends BasePage {
     }
 
     public void verifyFirstProductHasNamePriceThumbnail() {
-        var firstProduct = $$(".card-block, .col-lg-4").first();
+        var firstProduct = $$(".col-lg-4").first();
         firstProduct.$(".card-title, .hrefch").shouldBe(visible);
-        firstProduct.$(".card-price, .price-container").shouldBe(visible);
+        firstProduct.$("h5").shouldBe(visible);
         firstProduct.$("img").shouldBe(visible);
     }
 
