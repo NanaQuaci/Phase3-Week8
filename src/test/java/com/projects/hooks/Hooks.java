@@ -11,7 +11,8 @@ public class Hooks {
     @Before
     public void setUp() {
         Configuration.baseUrl = "https://www.demoblaze.com";
-        Configuration.headless = false;         // CI-friendly; turn off for local debugging
+//        Configuration.headless = false;
+        Configuration.headless = Boolean.parseBoolean(System.getProperty("selenide.headless", "true"));
         Configuration.browserSize = null;
         // Optional: set remote WebDriver URL via env var for selenium grid
         // Configuration.remote = System.getenv("SELENIUM_REMOTE_URL");
