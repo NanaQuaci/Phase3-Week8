@@ -197,12 +197,30 @@ jobs:
     steps:
       - name: Send Slack notification
         run: |
-          STATUS="${{ needs.ui-tests.result }}"
-          if [ "$STATUS" = "success" ]; then
-            COLOR="good"
-            EMOJI="✅"
-            TITLE="*E-Commerce QA Pipeline Passed*"
-          else
+         # Default values
+         STATUS="success"
+         COLOR="good"
+         EMOJI="✅"
+         TITLE="*E-Commerce QA Pipeline Passed*"
+                                
+         # If any upstream job failed because of test/assertion failures
+         if [[ "${{ needs.ui-tests.result }}" == "failure" || \
+               "${{ needs.performance.result }}" == "failure" || \
+               "${{ needs.security.result }}" == "failure" ]]; then
+           STATUS="completed_with_failures"
+           COLOR="warning"
+           EMOJI="⚠️"
+           TITLE="*E-Commerce QA Pipeline Completed with Failures*"
+         fi
+                                
+         # If any upstream job failed due to infra (cancelled or error)
+          if [[ "${{ needs.ui-tests.result }}" == "cancelled" || \
+               "${{ needs.performance.result }}" == "cancelled" || \
+               "${{ needs.security.result }}" == "cancelled" || \
+               "${{ needs.ui-tests.result }}" == "skipped" || \
+               "${{ needs.performance.result }}" == "skipped" || \
+               "${{ needs.security.result }}" == "skipped" ]]; then
+            STATUS="failed"
             COLOR="danger"
             EMOJI="❌"
             TITLE="*E-Commerce QA Pipeline Failed*"
