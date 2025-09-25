@@ -89,7 +89,7 @@ jobs:
   # ------------------------
   # 4. DEPLOY ALLURE REPORT
   # ------------------------
-  deploy-report:
+  deploy-allure-report:
     name: 🚀 Publish Allure Report
     runs-on: ubuntu-latest
     needs: [ui-tests, performance, security]
@@ -123,13 +123,39 @@ jobs:
           publish_branch: gh-pages
           force_orphan: true
 
+  deploy-jmeter-report:
+    name: 🚀 Publish JMeter Report
+    runs-on: ubuntu-latest
+    needs: performance
+    if: always()
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download JMeter results
+        uses: actions/download-artifact@v4
+        with:
+          name: jmeter-results
+          path: jmeter-results
+
+      - name: Deploy JMeter report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: jmeter-results/html-report
+          publish_branch: gh-pages
+          destination_dir: jmeter-report
+          force_orphan: false
+
+
   # ------------------------
   # 5. SLACK NOTIFICATION
   # ------------------------
   notify-slack:
     name: 🔔 Slack Notification
     runs-on: ubuntu-latest
-    needs: [ui-tests, performance, security, deploy-report]
+    needs: [ ui-tests, performance, security, deploy-allure-report, deploy-jmeter-report ]
     if: always()
 
     steps:
@@ -163,7 +189,7 @@ jobs:
                     \"fields\": [
                       {
                         \"type\": \"mrkdwn\",
-                        \"text\": \"*Report:*\n<https://nanaquaci.github.io/Phase3-Week8/|Allure Report>\"
+                        \"text\": \"*Reports:*\n<https://nanaquaci.github.io/Phase3-Week8/|Allure Report>\n<JMeter Report: https://nanaquaci.github.io/Phase3-Week8/jmeter-report/|Click Here>"
                       },
                       {
                         \"type\": \"mrkdwn\",
