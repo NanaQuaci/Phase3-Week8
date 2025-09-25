@@ -1,11 +1,18 @@
-FROM maven:3.9.6-eclipse-temurin-21 AS builder
-WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn -B -DskipTests package
-
 FROM maven:3.9.6-eclipse-temurin-21
+
 WORKDIR /app
-COPY --from=builder /app/target /app/target
+
+# Copy pom.xml first for dependency caching
 COPY pom.xml .
-CMD ["mvn", "test", "-Dselenide.remote=http://selenium:4444/wd/hub"]
+
+# Download dependencies (this layer will be cached if pom.xml doesn't change)
+RUN mvn dependency:go-offline -B
+
+# Copy source code
+COPY src ./src
+
+# Create allure-results directory
+RUN mkdir -p allure-results
+
+# Set default command
+CMD ["mvn", "clean", "test"]
