@@ -85,7 +85,8 @@ jobs:
             ghcr.io/zaproxy/zaproxy:stable  zap-baseline.py \
             -t https://www.demoblaze.com \
             -r zap-report.html \
-            -J zap-report.json
+            -J zap-report.json \
+            -I
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v4
