@@ -24,7 +24,7 @@ jobs:
 
       - name: Run tests with Docker Compose
         run: |
-          docker-compose up --build --abort-on-container-exit --exit-code-from tests
+          docker compose up --build --abort-on-container-exit --exit-code-from tests
         env:
           COMPOSE_FILE: docker-compose.yml
 
