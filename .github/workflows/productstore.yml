@@ -115,13 +115,14 @@ jobs:
       - name: Generate Allure report
         run: allure generate allure-results --clean -o allure-report
 
-      - name: Deploy report to GitHub Pages
+      - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: allure-report
           publish_branch: gh-pages
-          force_orphan: true
+          destination_dir: allure-report
+          force_orphan: false
 
   deploy-jmeter-report:
     name: 🚀 Publish JMeter Report
@@ -189,7 +190,7 @@ jobs:
                     \"fields\": [
                       {
                         \"type\": \"mrkdwn\",
-                        \"text\": \"*Reports:*\\n• <https://nanaquaci.github.io/Phase3-Week8/|Allure Report>\\n• <https://nanaquaci.github.io/Phase3-Week8/jmeter-report/|JMeter Report>\"
+                        \"text\": \"*Reports:*\\n• <https://nanaquaci.github.io/Phase3-Week8/allure-report/|Allure Report>\\n• <https://nanaquaci.github.io/Phase3-Week8/jmeter-report/|JMeter Report>\"
                       },
                       {
                         \"type\": \"mrkdwn\",
