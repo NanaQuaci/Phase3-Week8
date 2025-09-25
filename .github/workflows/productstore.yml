@@ -75,16 +75,18 @@ jobs:
     steps:
       - name: Run ZAP Baseline Scan
         run: |
-          docker run --rm -v ${{ github.workspace }}:/zap/wrk:rw \
+          mkdir -p security/security_report
+          docker run --rm -v ${{ github.workspace }}/security/security_report:/zap/wrk:rw \
             owasp/zap2docker-stable zap-baseline.py \
             -t https://www.demoblaze.com \
-            -r zap-report.html
+            -r zap-report.html \
+            -J zap-report.json
 
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v4
         with:
           name: zap-report
-          path: zap-report.html
+          path: security/security_report/
 
   # ------------------------
   # 4. DEPLOY ALLURE REPORT
@@ -149,6 +151,33 @@ jobs:
           destination_dir: jmeter-report
           force_orphan: false
 
+  deploy-zap-report:
+    name: 🚀 Publish ZAP Security Report
+    runs-on: ubuntu-latest
+    needs: security
+    if: always()
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download ZAP report artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: zap-report
+          path: security/security_report
+
+      - name: Deploy ZAP report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: security/security_report
+          publish_branch: gh-pages
+          destination_dir: zap-report
+          force_orphan: false
+
+
+
 
   # ------------------------
   # 5. SLACK NOTIFICATION
@@ -156,7 +185,7 @@ jobs:
   notify-slack:
     name: 🔔 Slack Notification
     runs-on: ubuntu-latest
-    needs: [ ui-tests, performance, security, deploy-allure-report, deploy-jmeter-report ]
+    needs: [ ui-tests, performance, security, deploy-allure-report, deploy-jmeter-report, deploy-zap-report ]
     if: always()
 
     steps:
@@ -190,7 +219,7 @@ jobs:
                     \"fields\": [
                       {
                         \"type\": \"mrkdwn\",
-                        \"text\": \"*Reports:*\\n• <https://nanaquaci.github.io/Phase3-Week8/allure-report/|Allure Report>\\n• <https://nanaquaci.github.io/Phase3-Week8/jmeter-report/|JMeter Report>\"
+                        \"text\": \"*Reports:*\\n• <https://nanaquaci.github.io/Phase3-Week8/allure-report/|Allure Report>\\n• <https://nanaquaci.github.io/Phase3-Week8/jmeter-report/|JMeter Report>\\n• <https://nanaquaci.github.io/Phase3-Week8/zap-report/zap-report.html|ZAP Security Report>\"
                       },
                       {
                         \"type\": \"mrkdwn\",
