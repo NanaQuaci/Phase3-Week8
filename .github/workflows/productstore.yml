@@ -77,7 +77,7 @@ jobs:
         run: |
           mkdir -p security/security_report
           docker run --rm -v ${{ github.workspace }}/security/security_report:/zap/wrk:rw \
-            owasp/zap2docker-stable zap-baseline.py \
+            ghcr.io/zaproxy/zaproxy:stable  zap-baseline.py \
             -t https://www.demoblaze.com \
             -r zap-report.html \
             -J zap-report.json
