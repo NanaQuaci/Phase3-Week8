@@ -1,0 +1,40 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"failed","Thu Sep 25 12:51:39 UTC 2025","Thu Sep 25 12:51:42 UTC 2025","3651","","com.projects.tests.HomePageTest","","com.projects.tests.HomePageTest","testNavigationLinks","testNavigationLinks()","Verify navigation links work correctly"
+"failed","Thu Sep 25 12:52:06 UTC 2025","Thu Sep 25 12:52:18 UTC 2025","12747","","Place Order (Checkout)","","Try to place order with invalid credit card","","Try to place order with invalid credit card","  As a Customer
+  I want to place an order so I receive a confirmation"
+"failed","Thu Sep 25 12:52:20 UTC 2025","Thu Sep 25 12:52:31 UTC 2025","11464","","Contact form","","Contact form validation - invalid email","","Contact form validation - invalid email","  As a Customer
+  I want to send messages to the store"
+"passed","Thu Sep 25 12:51:31 UTC 2025","Thu Sep 25 12:51:32 UTC 2025","1120","","com.projects.tests.CartTest","","com.projects.tests.CartTest","testRemoveNonexistentItem","testRemoveNonexistentItem()",""
+"passed","Thu Sep 25 12:51:15 UTC 2025","Thu Sep 25 12:51:19 UTC 2025","3152","","com.projects.tests.CartTest","","com.projects.tests.CartTest","testAddSameItemTwice","testAddSameItemTwice()",""
+"failed","Thu Sep 25 12:51:49 UTC 2025","Thu Sep 25 12:52:02 UTC 2025","12818","","Place Order (Checkout)","","Place order with valid details","","Place order with valid details","  As a Customer
+  I want to place an order so I receive a confirmation"
+"passed","Thu Sep 25 12:52:32 UTC 2025","Thu Sep 25 12:52:34 UTC 2025","1474","","Homepage","","Product details navigation","","Product details navigation","  As a Customer
+  I want to access the Product Store homepage
+  So that I can browse available products"
+"passed","Thu Sep 25 12:52:18 UTC 2025","Thu Sep 25 12:52:20 UTC 2025","1490","","Contact form","","Submit contact form with valid data","","Submit contact form with valid data","  As a Customer
+  I want to send messages to the store"
+"passed","Thu Sep 25 12:51:45 UTC 2025","Thu Sep 25 12:51:49 UTC 2025","3869","","Cart","","Add multiple items and remove one","","Add multiple items and remove one","  As a Customer
+  I want to add and manage items in my shopping cart"
+"passed","Thu Sep 25 12:51:07 UTC 2025","Thu Sep 25 12:51:12 UTC 2025","4965","","com.projects.tests.CheckoutTest","","com.projects.tests.CheckoutTest","testValidCheckout","testValidCheckout()",""
+"passed","Thu Sep 25 12:51:12 UTC 2025","Thu Sep 25 12:51:15 UTC 2025","3961","","com.projects.tests.CheckoutTest","","com.projects.tests.CheckoutTest","testInvalidCardCheckout","testInvalidCardCheckout()",""
+"passed","Thu Sep 25 12:52:34 UTC 2025","Thu Sep 25 12:52:35 UTC 2025","1460","","Homepage","","Product details navigation","","Product details navigation","  As a Customer
+  I want to access the Product Store homepage
+  So that I can browse available products"
+"passed","Thu Sep 25 12:51:33 UTC 2025","Thu Sep 25 12:51:38 UTC 2025","4519","","com.projects.tests.RegressionTest","","com.projects.tests.RegressionTest","testFullPurchaseFlow","testFullPurchaseFlow()","Full regression flow: browse → add to cart → checkout → confirmation"
+"failed","Thu Sep 25 12:51:01 UTC 2025","Thu Sep 25 12:51:05 UTC 2025","3704","","com.projects.tests.ContactTest","","com.projects.tests.ContactTest","testInvalidEmailContactSubmission","testInvalidEmailContactSubmission()",""
+"passed","Thu Sep 25 12:51:05 UTC 2025","Thu Sep 25 12:51:07 UTC 2025","1909","","com.projects.tests.ContactTest","","com.projects.tests.ContactTest","testValidContactSubmission","testValidContactSubmission()",""
+"passed","Thu Sep 25 12:51:19 UTC 2025","Thu Sep 25 12:51:21 UTC 2025","2591","","com.projects.tests.CartTest","","com.projects.tests.CartTest","testAddSingleItem","testAddSingleItem()",""
+"passed","Thu Sep 25 12:51:32 UTC 2025","Thu Sep 25 12:51:33 UTC 2025","954","","com.projects.tests.SmokeTest","","com.projects.tests.SmokeTest","testHomepageLoads","testHomepageLoads()",""
+"failed","Thu Sep 25 12:52:35 UTC 2025","Thu Sep 25 12:52:40 UTC 2025","4896","","Homepage","","Product details navigation","","Product details navigation","  As a Customer
+  I want to access the Product Store homepage
+  So that I can browse available products"
+"passed","Thu Sep 25 12:51:24 UTC 2025","Thu Sep 25 12:51:31 UTC 2025","7543","","com.projects.tests.CartTest","","com.projects.tests.CartTest","testRemoveItem","testRemoveItem()",""
+"passed","Thu Sep 25 12:52:31 UTC 2025","Thu Sep 25 12:52:32 UTC 2025","1052","","Homepage","","Homepage loads and shows product list","","Homepage loads and shows product list","  As a Customer
+  I want to access the Product Store homepage
+  So that I can browse available products"
+"failed","Thu Sep 25 12:51:21 UTC 2025","Thu Sep 25 12:51:24 UTC 2025","2332","","com.projects.tests.CartTest","","com.projects.tests.CartTest","testCartPersistenceAfterReload","testCartPersistenceAfterReload()",""
+"passed","Thu Sep 25 12:51:42 UTC 2025","Thu Sep 25 12:51:45 UTC 2025","2753","","Cart","","Add single product to cart","","Add single product to cart","  As a Customer
+  I want to add and manage items in my shopping cart"
+"passed","Thu Sep 25 12:51:38 UTC 2025","Thu Sep 25 12:51:39 UTC 2025","928","","com.projects.tests.HomePageTest","","com.projects.tests.HomePageTest","testHomepageLoadsWithProducts","testHomepageLoadsWithProducts()","Verify homepage loads and displays product list"
+"passed","Thu Sep 25 12:52:02 UTC 2025","Thu Sep 25 12:52:06 UTC 2025","3762","","Place Order (Checkout)","","Place order with valid details","","Place order with valid details","  As a Customer
+  I want to place an order so I receive a confirmation"
