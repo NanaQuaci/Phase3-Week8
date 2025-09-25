@@ -73,10 +73,15 @@ jobs:
     if: always()
 
     steps:
-      - name: Run ZAP Baseline Scan
+      - name: Prepare security report folder
         run: |
           mkdir -p security/security_report
-          docker run --rm -v ${{ github.workspace }}/security/security_report:/zap/wrk:rw \
+          chmod 777 security/security_report
+
+      - name: Run ZAP Baseline Scan
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}/security/security_report:/zap/wrk:rw \
             ghcr.io/zaproxy/zaproxy:stable  zap-baseline.py \
             -t https://www.demoblaze.com \
             -r zap-report.html \
@@ -94,7 +99,7 @@ jobs:
   deploy-allure-report:
     name: 🚀 Publish Allure Report
     runs-on: ubuntu-latest
-    needs: [ui-tests, performance, security]
+    needs: ui-tests
     if: always()
 
     steps:
