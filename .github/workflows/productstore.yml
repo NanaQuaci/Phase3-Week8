@@ -53,7 +53,7 @@ jobs:
           mkdir -p jmeter-results
           docker run --rm -v ${{ github.workspace }}:/jmeter \
             justb4/jmeter \
-            -n -t /jmeter/performance/ProductStoreTest.jmx \
+            -n -t /jmeter/performance/ProductStore_Performance_Test Plan.jmx \
             -l /jmeter/jmeter-results/results.jtl \
             -e -o /jmeter/jmeter-results/html-report
 
