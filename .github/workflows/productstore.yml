@@ -189,7 +189,7 @@ jobs:
                     \"fields\": [
                       {
                         \"type\": \"mrkdwn\",
-                        \"text\": \"*Reports:*\n<https://nanaquaci.github.io/Phase3-Week8/|Allure Report>\n<JMeter Report: https://nanaquaci.github.io/Phase3-Week8/jmeter-report/|Click Here>"
+                        \"text\": \"*Reports:*\\n• <https://nanaquaci.github.io/Phase3-Week8/|Allure Report>\\n• <https://nanaquaci.github.io/Phase3-Week8/jmeter-report/|JMeter Report>\"
                       },
                       {
                         \"type\": \"mrkdwn\",
