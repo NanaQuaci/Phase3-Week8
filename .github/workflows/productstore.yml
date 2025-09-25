@@ -22,14 +22,11 @@ jobs:
       - name: Build Docker image for tests
         run: docker build -t ecommerce_ui_tests .
 
-      - name: Run UI Tests inside Docker
+      - name: Run tests with Docker Compose
         run: |
-          mkdir -p allure-results
-          docker run --rm \
-            -v ${{ github.workspace }}/allure-results:/app/allure-results \
-            ecommerce_ui_tests mvn clean test \
-              -Dselenide.remote=http://selenium:4444/wd/hub \
-              -Dselenide.headless=true
+          docker-compose up --build --abort-on-container-exit --exit-code-from tests
+        env:
+          COMPOSE_FILE: docker-compose.yml
 
       - name: Upload Allure results
         if: always()
