@@ -266,11 +266,8 @@ jobs:
     if: always()
 
     steps:
-      - name: Download Allure results
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results
-          path: allure-results
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       # 1. Get Authentication Token from Xray
       - name: Get Xray Auth Token
@@ -289,4 +286,4 @@ jobs:
           curl -s -X POST https://xray.cloud.getxray.app/api/v2/import/execution/cucumber \
             -H "Content-Type: application/json" \
             -H "Authorization: Bearer ${{ steps.xray-auth.outputs.token }}" \
-            --data-binary @allure-results/cucumber.json
+            --data-binary @target/cucumber.json
