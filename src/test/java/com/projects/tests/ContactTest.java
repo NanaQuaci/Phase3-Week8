@@ -48,4 +48,51 @@ public class ContactTest extends BaseTest {
 
         assertTrue(contactPage.shouldShowEmailValidationError(), "Error alert should appear for invalid email");
     }
+
+    @Test
+    @Story("Empty Fields")
+    @Severity(SeverityLevel.CRITICAL)
+    void testEmptyContactFormSubmission() {
+        ContactInfo info = TestDataLoader.getContactInfo("empty");
+
+        log.info("Submitting contact form with all fields empty");
+        contactPage.openContactForm();
+        contactPage.fillContactForm(info);
+        contactPage.submitContactForm();
+
+        assertTrue(contactPage.shouldShowEmailValidationError() || !contactPage.shouldShowConfirmation(),
+                "Form submission with empty fields should trigger validation error");
+    }
+
+    @Test
+    @Story("Empty Email")
+    @Severity(SeverityLevel.NORMAL)
+    void testEmptyEmailContactSubmission() {
+        ContactInfo info = TestDataLoader.getContactInfo("emptyEmail");
+
+        log.info("Submitting contact form with empty email");
+        contactPage.openContactForm();
+        contactPage.fillContactForm(info);
+        contactPage.submitContactForm();
+
+        assertTrue(contactPage.shouldShowEmailValidationError(),
+                "Form submission with empty email should trigger validation error");
+    }
+
+    @Test
+    @Story("Empty Message")
+    @Severity(SeverityLevel.MINOR)
+    void testEmptyMessageContactSubmission() {
+        ContactInfo info = TestDataLoader.getContactInfo("emptyMessage");
+
+        log.info("Submitting contact form with empty message");
+        contactPage.openContactForm();
+        contactPage.fillContactForm(info);
+        contactPage.submitContactForm();
+
+        // Depending on how Demoblaze behaves, this might still pass — so you might check alert text here if needed
+        assertFalse(contactPage.shouldShowConfirmation(),
+                "Form submission with empty message should not be treated as a valid success");
+    }
+
 }

@@ -23,6 +23,12 @@ public class CartPage extends BasePage {
                 .click();
     }
 
+    public boolean isEmptyCartMessageVisible() {
+        return $$("#tbodyid tr").isEmpty() ||
+                $$(".btn, button, a").findBy(Condition.text("Place Order")).is(Condition.hidden);
+    }
+
+
     public boolean containsProduct(String productName) {
         return $$("tr").findBy(text(productName)).exists();
     }

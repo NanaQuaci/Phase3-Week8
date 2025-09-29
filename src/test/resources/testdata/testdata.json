@@ -28,10 +28,23 @@
       "creditCard": "1234567812345678"
     },
     "invalidCard": {
-      "name": "",
+      "name": "Collins Quaci",
       "creditCard": "abcd1234"
+    },
+    "missingFields": {
+      "name": "",
+      "creditCard": ""
+    },
+    "expiredCard": {
+      "name": "Collins Quaci",
+      "creditCard": "0000000000000000"
+    },
+    "specialChars": {
+      "name": "<script>alert(1)</script>",
+      "creditCard": "9999-9999-9999-9999"
     }
-  },
+  }
+,
   "contact": {
     "valid": {
       "name": "Collins",
@@ -42,6 +55,21 @@
       "name": "Collins",
       "email": "wrong-email-format",
       "message": "Testing invalid email format."
+    },
+    "empty": {
+      "name": "",
+      "email": "",
+      "message": ""
+    },
+    "emptyEmail": {
+      "name": "Collins",
+      "email": "",
+      "message": "Forgot to fill email"
+    },
+    "emptyMessage": {
+      "name": "Collins",
+      "email": "collins@example.com",
+      "message": ""
     }
   },
   "errors": {
@@ -50,5 +78,6 @@
     "emptyPassword": "Please fill out Username and Password.",
     "missingName": "Please fill out Name and Creditcard.",
     "invalidEmail": "Invalid email format."
-  }
+  },
+  "categories": ["Phones", "Laptops", "Monitors"]
 }

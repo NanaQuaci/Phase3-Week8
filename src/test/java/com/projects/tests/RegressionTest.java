@@ -9,6 +9,7 @@ import com.projects.pages.ProductPage;
 import com.projects.util.CheckoutInfo;
 import com.projects.util.TestDataLoader;
 import io.qameta.allure.*;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class RegressionTest extends BaseTest {
     private final CartPage cartPage = new CartPage();
     private final CheckoutPage checkoutPage = new CheckoutPage();
 
+    @Tag("regression")
     @Test
     @Story("Happy Path")
     @Severity(SeverityLevel.BLOCKER)

@@ -59,12 +59,16 @@ public class HomePage extends BasePage {
         $$(".card-block, .col-lg-4").shouldHave(sizeGreaterThan(0));
     }
 
-    public void verifyFirstProductHasNamePriceThumbnail() {
+    public boolean verifyFirstProductHasNamePriceThumbnail() {
         var firstProduct = $$(".col-lg-4").first();
-        firstProduct.$(".card-title, .hrefch").shouldBe(visible);
-        firstProduct.$("h5").shouldBe(visible);
-        firstProduct.$("img").shouldBe(visible);
+
+        boolean hasName = firstProduct.$(".card-title, .hrefch").is(visible);
+        boolean hasPrice = firstProduct.$("h5").is(visible);
+        boolean hasImage = firstProduct.$("img").is(visible);
+
+        return hasName && hasPrice && hasImage;
     }
+
 
     public void clickProduct(String productName) {
         $$(".hrefch").findBy(text(productName)).click();

@@ -50,4 +50,45 @@ public class HomePageTest extends BaseTest {
         homepage.clickHome();
         assertTrue(homepage.hasProducts(), "Products should be visible after clicking Home link");
     }
+
+    @Test
+    @Story("Page Reload")
+    @Severity(SeverityLevel.TRIVIAL)
+    @Description("Verify homepage still displays products after reload")
+    void testHomepageReload() {
+        log.info("Opening homepage and reloading");
+        homepage.open();
+        assertTrue(homepage.hasProducts(), "Homepage should display products initially");
+
+        com.codeborne.selenide.Selenide.refresh();
+        assertTrue(homepage.hasProducts(), "Homepage should display products after reload");
+    }
+
+    @Test
+    @Story("Product Cards")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Verify that the first product card contains name, price, and image")
+    void testProductCardHasAllElements() {
+        log.info("Verifying product card structure");
+        homepage.open();
+
+        assertTrue(
+                homepage.verifyFirstProductHasNamePriceThumbnail(),
+                "First product card should contain name, price, and image"
+        );
+    }
+
+    @Test
+    @Story("Category Switching - Data Driven")
+    @Severity(SeverityLevel.MINOR)
+    void testCategorySwitchingDataDriven() {
+        var categories = new String[] {"Phones", "Laptops", "Monitors"};
+        homepage.open();
+        for (String category : categories) {
+            log.info("Switching to category: {}", category);
+            homepage.clickNavLink(category);
+            assertTrue(homepage.hasProducts(), "Products should be displayed under " + category);
+        }
+    }
+
 }

@@ -4,6 +4,7 @@ import com.codeborne.selenide.junit5.ScreenShooterExtension;
 import com.projects.base.BaseTest;
 import com.projects.pages.HomePage;
 import io.qameta.allure.*;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -16,6 +17,7 @@ public class SmokeTest extends BaseTest {
 
     private final HomePage homepage = new HomePage();
 
+    @Tag("smoke")
     @Test
     @Story("Homepage Smoke Check")
     @Severity(SeverityLevel.BLOCKER)
