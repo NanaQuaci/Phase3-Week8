@@ -200,13 +200,13 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Generate Cucumber HTML report
-        uses: fissionlabsio/cucumber-html-reporter-action@v1.2
-        with:
-          json-file: target/cucumber.json
-          output: cucumber-report/index.html
-          theme: bootstrap
+      - name: Install cucumber-html-reporter
+        run: |
+          npm init -y
+          npm install cucumber-html-reporter --save-dev
 
+      - name: Generate Cucumber HTML report
+        run: node generate-cucumber-report.js
 
       - name: Deploy Cucumber report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -216,6 +216,7 @@ jobs:
           publish_branch: gh-pages
           destination_dir: cucumber-report
           force_orphan: false
+
 
   # ------------------------
   # 5. SLACK NOTIFICATION
