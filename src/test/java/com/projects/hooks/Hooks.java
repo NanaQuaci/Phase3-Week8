@@ -6,7 +6,6 @@ import io.cucumber.java.After;
 import com.codeborne.selenide.Configuration;
 import static com.codeborne.selenide.Selenide.*;
 
-
 public class Hooks {
     @Before
     public void setUp() {
@@ -19,6 +18,7 @@ public class Hooks {
 
         open("/");
         WebDriverRunner.getWebDriver().manage().window().maximize();
+        //Just test
     }
 
     @After
