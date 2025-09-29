@@ -316,6 +316,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Download Cucumber JSON results
+        uses: actions/download-artifact@v4
+        with:
+            name: cucumber-json
+            path: target
+
+      - name: Verify cucumber.json exists
+        run: |
+          ls -la target/
+          test -f target/cucumber.json || (echo "❌ target/cucumber.json missing!" && exit 1)
+          echo "✅ cucumber.json found successfully"
+
       # 1. Get Authentication Token from Xray
       - name: Get Xray Auth Token
         id: xray-auth
@@ -326,10 +338,7 @@ jobs:
           token=$(echo $response | tr -d '"')
           echo "token=$token" >> $GITHUB_OUTPUT
 
-      - name: Verify cucumber.json exists
-        run: |
-          ls -l target || true
-          test -f target/cucumber.json || (echo "❌ target/cucumber.json missing!" && exit 1)
+      
 
 
       # 2. Upload Cucumber Results to Xray
