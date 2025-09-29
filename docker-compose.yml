@@ -17,4 +17,4 @@ services:
       - ./allure-results:/app/allure-results
       - ./cucumber-report:/app/cucumber-report
       - ./target:/app/target
-    command: mvn clean test -Dselenide.remote=http://selenium:4444/wd/hub
+    command: mvn test -Dselenide.remote=http://selenium:4444/wd/hub
