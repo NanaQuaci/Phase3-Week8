@@ -15,5 +15,6 @@ services:
       SELENIDE_REMOTE_URL: http://selenium:4444/wd/hub
     volumes:
       - ./allure-results:/app/allure-results
+      - ./cucumber-report:/app/cucumber-report
       - ./target:/app/target
     command: mvn test -Dselenide.remote=http://selenium:4444/wd/hub

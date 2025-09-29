@@ -35,6 +35,13 @@ jobs:
           name: allure-results
           path: allure-results
 
+      - name: Upload Cucumber JSON results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-json
+          path: target/cucumber.json
+
   # ------------------------
   # 2. PERFORMANCE TESTS (JMeter)
   # ------------------------
@@ -194,6 +201,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Download Cucumber JSON artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: cucumber-json
+          path: cucumber-report
+
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
