@@ -426,7 +426,7 @@ jobs:
                     \"fields\": [
                       {
                         \"type\": \"mrkdwn\",
-                        \"text\": \"*Reports:*\\n• <https://${REPO_OWNER}.github.io/${REPO_NAME}/|📊 All Reports Dashboard>\\n• <https://${REPO_OWNER}.github.io/${REPO_NAME}/allure-report/|Allure>\\n• <https://${REPO_OWNER}.github.io/${REPO_NAME}/cucumber-report/|Cucumber>\\n• <https://${REPO_OWNER}.github.io/${REPO_NAME}/jmeter-report/|JMeter>\\n• <https://${REPO_OWNER}.github.io/${REPO_NAME}/zap-report/zap-report.html|ZAP Security>\"
+                        \"text\": \"*Reports:*\\n• <https://${REPO_OWNER}.github.io/${REPO_NAME}/|📊 All Reports Dashboard>\\n• <https://${REPO_OWNER}.github.io/${REPO_NAME}/allure-report/|Allure Report>\\n• <https://${REPO_OWNER}.github.io/${REPO_NAME}/cucumber-report/|Cucumber Report>\\n• <https://${REPO_OWNER}.github.io/${REPO_NAME}/jmeter-report/|JMeter Report>\\n• <https://${REPO_OWNER}.github.io/${REPO_NAME}/zap-report/zap-report.html|ZAP Security Report>\"
                       },
                       {
                         \"type\": \"mrkdwn\",
