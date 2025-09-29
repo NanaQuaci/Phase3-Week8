@@ -200,9 +200,6 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install Cucumber HTML Reporter
-        run: npm install -g cucumber-html-reporter
-
       - name: Generate Cucumber HTML report
         run: |
           mkdir -p cucumber-report
@@ -212,7 +209,16 @@ jobs:
             --jsonFile=target/cucumber.json \
             --output=cucumber-report/index.html \
             --theme=bootstrap
-      
+
+      - name: Deploy Cucumber report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: cucumber-report
+          publish_branch: gh-pages
+          destination_dir: cucumber-report
+          force_orphan: false
+
 
       - name: Deploy Cucumber report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
