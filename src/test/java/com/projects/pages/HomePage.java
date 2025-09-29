@@ -62,7 +62,7 @@ public class HomePage extends BasePage {
     public boolean verifyFirstProductHasNamePriceThumbnail() {
         var firstProduct = $$(".col-lg-4").first();
 
-        boolean hasName = firstProduct.$(".card-title, .hrefch").is(visible);
+        boolean hasName = firstProduct.$(".card-title .hrefch").is(visible);
         boolean hasPrice = firstProduct.$("h5").is(visible);
         boolean hasImage = firstProduct.$("img").is(visible);
 
