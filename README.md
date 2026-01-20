@@ -133,4 +133,5 @@ Quality Assurance Engineer
 🔗 LinkedIn: https://www.linkedin.com/in/collins-adu-20a5a8217/
 
 🔗 GitHub: https://github.com/NanaQuaci
+
 🔗 Find Test Reports: https://nanaquaci.github.io/Phase3-Week8/
