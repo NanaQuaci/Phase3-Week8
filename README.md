@@ -127,7 +127,9 @@ Note: Ensure Java, Maven, Docker, and Allure are installed on your system.
 👨‍💻 Author
 
 Collins Kwasi Adu
+
 Quality Assurance Engineer
+
 📧 aducollins49@gmail.com
 
 🔗 LinkedIn: https://www.linkedin.com/in/collins-adu-20a5a8217/
